@@ -74,7 +74,7 @@ class block_databasetags extends block_base {
         $this->content->footer = '';
 
         $fieldids = $this->get_fieldids();
-        $tags = $this->get_tags($fieldids);
+        $tags = $this->get_tags($fieldids, $this->page->course->id);
         $this->content->text = $this->tag_print_cloud($tags, $this->config->numberofdatabasetags);
 
         return $this->content;
@@ -93,7 +93,7 @@ class block_databasetags extends block_base {
         return $fieldids;
     }
 
-    public static function get_tags($fieldids) {
+    public static function get_tags($fieldids, $courseid) {
         global $DB;
 
         if (empty($fieldids)) {
@@ -101,11 +101,13 @@ class block_databasetags extends block_base {
         }
 
         list($insql, $params) = $DB->get_in_or_equal($fieldids);
+        $params[] = $courseid;
         $sql = "
         SELECT dc.id, dc.content, df.name as fieldname, df.type as fieldtype, df.id as fieldid, df.dataid
         FROM {data_content} dc
         INNER JOIN {data_fields} df ON dc.fieldid = df.id
-        WHERE dc.fieldid $insql
+        INNER JOIN {data} d ON d.id = df.dataid
+        WHERE dc.fieldid $insql AND d.course = ?
         ";
         $rawtags = $DB->get_records_sql($sql, $params);
 
