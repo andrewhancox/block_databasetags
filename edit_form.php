@@ -55,17 +55,43 @@ class block_databasetags_edit_form extends block_edit_form {
         $mform->addElement('header', 'fieldstodisplay', get_string('fieldstodisplay', 'block_databasetags'));
         $mform->addElement('html', html_writer::div(get_string('fieldsintro', 'block_databasetags')));
 
-        foreach ($cloudablefields as $cloudablefield) {
-            if (!isset($lastcloudablefield) || $lastcloudablefield->activityname != $cloudablefield->activityname) {
-                $mform->addElement(
-                    'html',
-                    html_writer::div(get_string('activity', 'block_databasetags') . $cloudablefield->activityname));
+        $mform->addElement('html', '<ul>');
+        foreach ($cloudablefields as $checkbox) {
+            if (isset($lastcheckbox) && $lastcheckbox->categoryname != $checkbox->categoryname) {
+                $mform->addElement('html', "</ul>");
+            }
+            if (isset($lastcheckbox) && $lastcheckbox->coursename != $checkbox->coursename) {
+                $mform->addElement('html', "</ul>");
+            }
+            if (isset($lastcheckbox) && $lastcheckbox->activityname != $checkbox->activityname) {
+                $mform->addElement('html', "</ul>");
             }
 
-            $mform->addElement('checkbox', 'config_field_' . $cloudablefield->fieldid, $cloudablefield->fieldname);
+            if (!isset($lastcheckbox)) {
+                $mform->addElement('html', "<li>$checkbox->categoryname</li><ul>");
+            } else if ($lastcheckbox->categoryname != $checkbox->categoryname) {
+                $mform->addElement('html', "<li>$checkbox->categoryname</li><ul>");
+            }
 
-            $lastcloudablefield = $cloudablefield;
+            if (!isset($lastcheckbox)) {
+                $mform->addElement('html', "<li>$checkbox->coursename</li><ul>");
+            } else if ($lastcheckbox->coursename != $checkbox->coursename) {
+                $mform->addElement('html', "<li>$checkbox->coursename</li><ul>");
+            }
+
+            if (!isset($lastcheckbox)) {
+                $mform->addElement('html', "<li>$checkbox->activityname</li><ul>");
+            } else if ($lastcheckbox->activityname != $checkbox->activityname) {
+                $mform->addElement('html', "<li>$checkbox->activityname</li><ul>");
+            }
+
+            $mform->addElement('html', '<li>');
+            $mform->addElement('checkbox', 'config_field_' . $checkbox->fieldid, $checkbox->fieldname);
+            $mform->addElement('html', '</li>');
+
+            $lastcheckbox = $checkbox;
         }
+        $mform->addElement('html', '</ul></ul>');
     }
 
     private function get_cloudablefields() {
@@ -76,14 +102,15 @@ class block_databasetags_edit_form extends block_edit_form {
         $params[] = $this->page->course->id;
 
         $sql = "
-        SELECT df.id as fieldid, d.name as activityname, df.name as fieldname
+        SELECT df.id as fieldid, d.name as activityname, df.name as fieldname, c.fullname as coursename, cc.name as categoryname
         FROM {course} c
         INNER JOIN {course_modules} cm on c.id = cm.course
+        INNER JOIN {course_categories} cc on cc.id = c.category
         INNER JOIN {modules} m on m.id = cm.module
         INNER JOIN {data} d on d.id = cm.instance
         INNER JOIN {data_fields} df on df.dataid = cm.instance
-        WHERE m.name = 'data' AND df.type $insql AND c.id = ?
-        ORDER BY d.name, df.name
+        WHERE m.name = 'data' AND df.type $insql
+        ORDER BY cc.name, c.fullname, d.name, df.name
         ";
         return $DB->get_records_sql($sql, $params);
     }

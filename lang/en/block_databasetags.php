@@ -21,9 +21,11 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'databasetags';
+$string['pluginname'] = 'Database Tags';
 $string['configtitle'] = 'Block title';
 $string['numberoftags'] = 'Number of tags to display';
 $string['fieldstodisplay'] = 'Fields to display';
 $string['activity'] = 'Database Activity: ';
 $string['fieldsintro'] = 'Please select the database fields that will be used to generate the tag cloud.';
+$string['databasetags:myaddinstance'] = 'Add a new database tags block';
+$string['databasetags:addinstance'] = 'Add a new database tags summary block';

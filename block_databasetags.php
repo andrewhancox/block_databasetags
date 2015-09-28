@@ -31,7 +31,7 @@ class block_databasetags extends block_base {
     }
 
     public function has_config() {
-        return true;
+        return false;
     }
 
     public function applicable_formats() {
@@ -74,7 +74,7 @@ class block_databasetags extends block_base {
         $this->content->footer = '';
 
         $fieldids = $this->get_fieldids();
-        $tags = $this->get_tags($fieldids, $this->page->course->id);
+        $tags = $this->get_tags($fieldids);
         $this->content->text = $this->tag_print_cloud($tags, $this->config->numberofdatabasetags);
 
         return $this->content;
@@ -93,7 +93,19 @@ class block_databasetags extends block_base {
         return $fieldids;
     }
 
-    public static function get_tags($fieldids, $courseid) {
+    private static function can_access_course($courseid) {
+        global $DB;
+        static $cache = array();
+
+        if (!array_key_exists($courseid, $cache)) {
+            $course = $DB->get_record('course', array('id'=>$courseid));
+            $cache[$courseid] = can_access_course($course);
+        }
+
+        return $cache[$courseid];
+    }
+
+    public static function get_tags($fieldids) {
         global $DB;
 
         if (empty($fieldids)) {
@@ -101,18 +113,18 @@ class block_databasetags extends block_base {
         }
 
         list($insql, $params) = $DB->get_in_or_equal($fieldids);
-        $params[] = $courseid;
         $sql = "
-        SELECT dc.id, dc.content, df.name as fieldname, df.type as fieldtype, df.id as fieldid, df.dataid
+        SELECT dc.id, dc.content, df.name as fieldname, df.type as fieldtype, df.id as fieldid, df.dataid, d.course as courseid
         FROM {data_content} dc
         INNER JOIN {data_fields} df ON dc.fieldid = df.id
         INNER JOIN {data} d ON d.id = df.dataid
-        WHERE dc.fieldid $insql AND d.course = ?
+        WHERE dc.fieldid $insql
         ";
         $rawtags = $DB->get_records_sql($sql, $params);
 
         $splittags = array();
         foreach ($rawtags as $rawtag) {
+            self::can_access_course($rawtag->courseid);
 
             if ($rawtag->fieldtype == 'tag') {
                 $seperator = ',';
