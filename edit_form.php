@@ -56,8 +56,9 @@ class block_databasetags_edit_form extends block_edit_form {
         $mform->addElement('html', html_writer::div(get_string('fieldsintro', 'block_databasetags')));
 
         $mform->addElement('html', '<ul>');
+
         foreach ($cloudablefields as $checkbox) {
-            if (isset($lastcheckbox) && $lastcheckbox->categoryname != $checkbox->categoryname) {
+            if (isset($lastcheckbox) && $lastcheckbox->categoryname != $checkbox->categoryname && !empty($lastcheckbox->categoryname)) {
                 $mform->addElement('html', "</ul>");
             }
             if (isset($lastcheckbox) && $lastcheckbox->coursename != $checkbox->coursename) {
@@ -67,9 +68,9 @@ class block_databasetags_edit_form extends block_edit_form {
                 $mform->addElement('html', "</ul>");
             }
 
-            if (!isset($lastcheckbox)) {
+            if (!isset($lastcheckbox) && !empty($lastcheckbox->categoryname)) {
                 $mform->addElement('html', "<li>$checkbox->categoryname</li><ul>");
-            } else if ($lastcheckbox->categoryname != $checkbox->categoryname) {
+            } else if (isset($lastcheckbox) && $lastcheckbox->categoryname != $checkbox->categoryname) {
                 $mform->addElement('html', "<li>$checkbox->categoryname</li><ul>");
             }
 
@@ -105,7 +106,7 @@ class block_databasetags_edit_form extends block_edit_form {
         SELECT df.id as fieldid, d.name as activityname, df.name as fieldname, c.fullname as coursename, cc.name as categoryname
         FROM {course} c
         INNER JOIN {course_modules} cm on c.id = cm.course
-        INNER JOIN {course_categories} cc on cc.id = c.category
+        LEFT JOIN {course_categories} cc on cc.id = c.category
         INNER JOIN {modules} m on m.id = cm.module
         INNER JOIN {data} d on d.id = cm.instance
         INNER JOIN {data_fields} df on df.dataid = cm.instance
