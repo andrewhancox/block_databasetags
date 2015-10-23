@@ -132,7 +132,12 @@ class block_databasetags extends block_base {
                 $seperator = '##';
             }
 
-            $tagsincontent = explode($seperator, $rawtag->content);
+            if ($rawtag->fieldtype == 'linkedradiobutton') {
+                $tagsincontent = array($rawtag->content);
+            } else {
+                $tagsincontent = explode($seperator, $rawtag->content);
+            }
+
             $keyablefieldname = str_replace(' ', '_', $rawtag->fieldname);
 
             foreach ($tagsincontent as $tagincontent) {

@@ -98,7 +98,7 @@ class block_databasetags_edit_form extends block_edit_form {
     private function get_cloudablefields() {
         global $DB;
 
-        $cloudablefields = array('linkedcheckbox', 'checkbox', 'tag');
+        $cloudablefields = array('linkedradiobutton', 'linkedcheckbox', 'checkbox', 'tag');
         list($insql, $params) = $DB->get_in_or_equal($cloudablefields);
         $params[] = $this->page->course->id;
 
