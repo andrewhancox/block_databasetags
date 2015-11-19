@@ -9,3 +9,17 @@
 .block_databasetags #coursetag .coursetag_form_wrapper .coursetag_form_positioner .coursetag_form_input2a {background-color: transparent; border: 1px solid #999;width: 12em;color: #669954;padding: 2px;}
 .block_databasetags .coursetag_morelink {}
 .block_databasetags .coursetag_list {}
+
+fieldset#id_fieldstodisplay div {
+    display: inline;
+}
+fieldset#id_fieldstodisplay li.fieldname {
+    list-style-type: none;
+}
+fieldset#id_fieldstodisplay li.fieldname div.fitemtitle {
+    text-align: left;
+    width: auto;
+}
+fieldset#id_fieldstodisplay li.fieldname div.felement.fcheckbox {
+    margin-left: 15px;
+}
