@@ -98,7 +98,7 @@ class block_databasetags extends block_base {
         static $cache = array();
 
         if (!array_key_exists($courseid, $cache)) {
-            $course = $DB->get_record('course', array('id'=>$courseid));
+            $course = $DB->get_record('course', array('id' => $courseid));
             $cache[$courseid] = can_access_course($course);
         }
 
@@ -124,7 +124,7 @@ class block_databasetags extends block_base {
 
         $splittags = array();
         foreach ($rawtags as $rawtag) {
-            if(!self::can_access_course($rawtag->courseid)) {
+            if (!self::can_access_course($rawtag->courseid)) {
                 continue;
             }
 
@@ -170,7 +170,7 @@ class block_databasetags extends block_base {
         return $splittags;
     }
 
-    public static function tag_print_cloud($tagsincloud, $nr_of_tags=150) {
+    public static function tag_print_cloud($tagsincloud, $nroftags=150) {
         $maxcount = 0;
         foreach ($tagsincloud as $tag) {
             if ($tag->count > $maxcount) {
@@ -179,7 +179,7 @@ class block_databasetags extends block_base {
         }
 
         ksort($tagsincloud);
-        $tagsincloud = array_slice($tagsincloud, 0, $nr_of_tags);
+        $tagsincloud = array_slice($tagsincloud, 0, $nroftags);
 
         foreach ($tagsincloud as $tag) {
             $size = (int) (( $tag->count / $maxcount) * 20);
@@ -194,7 +194,7 @@ class block_databasetags extends block_base {
                 $fieldparam .= '[]';
             }
 
-            $params =  array(
+            $params = array(
                 $fieldparam => $tag->name,
                 'd' => $tag->dataid,
                 'advanced' => 1
