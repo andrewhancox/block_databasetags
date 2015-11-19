@@ -69,24 +69,24 @@ class block_databasetags_edit_form extends block_edit_form {
             }
 
             if (!isset($lastcheckbox) && !empty($lastcheckbox->categoryname)) {
-                $mform->addElement('html', "<li>$checkbox->categoryname</li><ul>");
+                $mform->addElement('html', "<li class='categoryname'>$checkbox->categoryname</li><ul>");
             } else if (isset($lastcheckbox) && $lastcheckbox->categoryname != $checkbox->categoryname) {
-                $mform->addElement('html', "<li>$checkbox->categoryname</li><ul>");
+                $mform->addElement('html', "<li class='categoryname'>$checkbox->categoryname</li><ul>");
             }
 
             if (!isset($lastcheckbox)) {
-                $mform->addElement('html', "<li>$checkbox->coursename</li><ul>");
+                $mform->addElement('html', "<li class='coursename'>$checkbox->coursename</li><ul>");
             } else if ($lastcheckbox->coursename != $checkbox->coursename) {
-                $mform->addElement('html', "<li>$checkbox->coursename</li><ul>");
+                $mform->addElement('html', "<li class='coursename'>$checkbox->coursename</li><ul>");
             }
 
             if (!isset($lastcheckbox)) {
-                $mform->addElement('html', "<li>$checkbox->activityname</li><ul>");
+                $mform->addElement('html', "<li class='activityname'>$checkbox->activityname</li><ul>");
             } else if ($lastcheckbox->activityname != $checkbox->activityname) {
-                $mform->addElement('html', "<li>$checkbox->activityname</li><ul>");
+                $mform->addElement('html', "<li class='activityname'>$checkbox->activityname</li><ul>");
             }
 
-            $mform->addElement('html', '<li>');
+            $mform->addElement('html', '<li class=\'fieldname\'>');
             $mform->addElement('checkbox', 'config_field_' . $checkbox->fieldid, $checkbox->fieldname);
             $mform->addElement('html', '</li>');
 

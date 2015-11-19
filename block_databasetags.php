@@ -124,7 +124,9 @@ class block_databasetags extends block_base {
 
         $splittags = array();
         foreach ($rawtags as $rawtag) {
-            self::can_access_course($rawtag->courseid);
+            if(!self::can_access_course($rawtag->courseid)) {
+                continue;
+            }
 
             if ($rawtag->fieldtype == 'tag') {
                 $seperator = ',';
