@@ -130,14 +130,16 @@ class block_databasetags extends block_base {
 
             if ($rawtag->fieldtype == 'tag') {
                 $seperator = ',';
-            } else if ($rawtag->fieldtype == 'checkbox' || $rawtag->fieldtype == 'linkedcheckbox') {
+            } else if ($rawtag->fieldtype == 'checkbox' || $rawtag->fieldtype == 'linkedcheckbox' || $rawtag->fieldtype == 'multimenu') {
                 $seperator = '##';
             }
 
-            if ($rawtag->fieldtype == 'linkedradiobutton') {
+            if ($rawtag->fieldtype == 'linkedradiobutton' || $rawtag->fieldtype == 'menu') {
                 $tagsincontent = array($rawtag->content);
-            } else {
+            } else if (!empty($seperator)) {
                 $tagsincontent = explode($seperator, $rawtag->content);
+            } else {
+                $tagsincontent = [];
             }
 
             $keyablefieldname = str_replace(' ', '_', $rawtag->fieldname);
