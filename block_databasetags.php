@@ -180,7 +180,7 @@ class block_databasetags extends block_base {
             }
         }
 
-        ksort($tagsincloud);
+        ksort($tagsincloud, SORT_NATURAL);
         $tagsincloud = array_slice($tagsincloud, 0, $nroftags);
 
         foreach ($tagsincloud as $tag) {
