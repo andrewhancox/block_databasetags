@@ -35,7 +35,7 @@ class block_databasetags extends block_base {
     }
 
     public function applicable_formats() {
-        return array('all' => true);
+        return ['all' => true];
     }
 
     public function instance_allow_config() {
@@ -83,7 +83,7 @@ class block_databasetags extends block_base {
     private function get_fieldids() {
         $config = (array)$this->config;
 
-        $fieldids = array();
+        $fieldids = [];
         foreach (array_keys($config) as $setting) {
             if (strpos($setting, 'field_') !== false) {
                 $fieldids[] = substr($setting, 6);
@@ -95,10 +95,10 @@ class block_databasetags extends block_base {
 
     private static function can_access_course($courseid) {
         global $DB;
-        static $cache = array();
+        static $cache = [];
 
         if (!array_key_exists($courseid, $cache)) {
-            $course = $DB->get_record('course', array('id' => $courseid));
+            $course = $DB->get_record('course', ['id' => $courseid]);
             $cache[$courseid] = can_access_course($course);
         }
 
@@ -109,7 +109,7 @@ class block_databasetags extends block_base {
         global $DB;
 
         if (empty($fieldids)) {
-            return array();
+            return [];
         }
 
         list($insql, $params) = $DB->get_in_or_equal($fieldids);
@@ -122,7 +122,7 @@ class block_databasetags extends block_base {
         ";
         $rawtags = $DB->get_records_sql($sql, $params);
 
-        $splittags = array();
+        $splittags = [];
         foreach ($rawtags as $rawtag) {
             if (!self::can_access_course($rawtag->courseid)) {
                 continue;
@@ -135,7 +135,7 @@ class block_databasetags extends block_base {
             }
 
             if ($rawtag->fieldtype == 'linkedradiobutton' || $rawtag->fieldtype == 'menu') {
-                $tagsincontent = array($rawtag->content);
+                $tagsincontent = [$rawtag->content];
             } else if (!empty($seperator)) {
                 $tagsincontent = explode($seperator, $rawtag->content);
             } else {
@@ -196,13 +196,13 @@ class block_databasetags extends block_base {
                 $fieldparam .= '[]';
             }
 
-            $params = array(
+            $params = [
                 $fieldparam => $tag->name,
                 'd' => $tag->dataid,
-                'advanced' => 1
-            );
+                'advanced' => 1,
+            ];
             $url = new moodle_url('/mod/data/view.php', $params);
-            $link = html_writer::link($url, $tag->name, array('class' => $tag->class));
+            $link = html_writer::link($url, $tag->name, ['class' => $tag->class]);
             $output .= '<li>' . $link . '</li> ';
         }
         $output .= "\n</ul>\n";

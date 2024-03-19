@@ -37,7 +37,7 @@ class block_databasetags_edit_form extends block_edit_form {
         $mform->setType('config_title', PARAM_TEXT);
         $mform->setDefault('config_title', get_string('pluginname', 'block_databasetags'));
 
-        $numberofdatabasetags = array();
+        $numberofdatabasetags = [];
         for ($i = 1; $i <= 200; $i++) {
             $numberofdatabasetags[$i] = $i;
         }
@@ -98,7 +98,7 @@ class block_databasetags_edit_form extends block_edit_form {
     private function get_cloudablefields() {
         global $DB;
 
-        $cloudablefields = array('linkedradiobutton', 'linkedcheckbox', 'checkbox', 'tag');
+        $cloudablefields = ['linkedradiobutton', 'linkedcheckbox', 'checkbox', 'tag'];
         list($insql, $params) = $DB->get_in_or_equal($cloudablefields);
         $params[] = $this->page->course->id;
 
