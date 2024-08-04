@@ -15,19 +15,14 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Form for editing tag block instances.
- *
- * @package   block_databasetags
- * @copyright 2009 Tim Hunt
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package block_databasetags
+ * @author Andrew Hancox <andrewdchancox@googlemail.com>
+ * @author Open Source Learning <enquiries@opensourcelearning.co.uk>
+ * @link https://opensourcelearning.co.uk
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright 2024, Andrew Hancox
  */
 
-/**
- * Form for editing tag block instances.
- *
- * @copyright 2009 Tim Hunt
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 class block_databasetags_edit_form extends block_edit_form {
     protected function specific_definition($mform) {
         // Fields for editing HTML block title and contents.

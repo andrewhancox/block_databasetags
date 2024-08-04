@@ -23,30 +23,21 @@
  * @copyright 2024, Andrew Hancox
  */
 
+namespace block_databasetags\privacy;
+
+use core_privacy\local\metadata\null_provider;
+
 defined('MOODLE_INTERNAL') || die();
 
-$capabilities = [
+class provider implements null_provider {
 
-    'block/databasetags:myaddinstance' => [
-        'captype' => 'write',
-        'contextlevel' => CONTEXT_SYSTEM,
-        'archetypes' => [
-            'user' => CAP_ALLOW,
-        ],
-
-        'clonepermissionsfrom' => 'moodle/my:manageblocks',
-    ],
-
-    'block/databasetags:addinstance' => [
-        'riskbitmask' => RISK_SPAM | RISK_XSS,
-
-        'captype' => 'write',
-        'contextlevel' => CONTEXT_BLOCK,
-        'archetypes' => [
-            'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW,
-        ],
-
-        'clonepermissionsfrom' => 'moodle/site:manageblocks',
-    ],
-];
+    /**
+     * Get the language string identifier with the component's language
+     * file to explain why this plugin stores no data.
+     *
+     * @return  string
+     */
+    public static function get_reason(): string {
+        return 'privacy:metadata';
+    }
+}

@@ -15,11 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details
- *
- * @package    block_databasetags
- * @copyright  1999 onwards Martin Dougiamas (http://dougiamas.com)
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package block_databasetags
+ * @author Andrew Hancox <andrewdchancox@googlemail.com>
+ * @author Open Source Learning <enquiries@opensourcelearning.co.uk>
+ * @link https://opensourcelearning.co.uk
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright 2024, Andrew Hancox
  */
 
 defined('MOODLE_INTERNAL') || die();

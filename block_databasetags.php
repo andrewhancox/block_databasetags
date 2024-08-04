@@ -15,10 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package    block_databasetags
- * @subpackage tag
- * @copyright  2015 onwards Andrew Hancox (andrewdchancox@googlemail.com)
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package block_databasetags
+ * @author Andrew Hancox <andrewdchancox@googlemail.com>
+ * @author Open Source Learning <enquiries@opensourcelearning.co.uk>
+ * @link https://opensourcelearning.co.uk
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright 2024, Andrew Hancox
  */
 
 class block_databasetags extends block_base {
